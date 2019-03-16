@@ -1,0 +1,5 @@
+# ignoring this files:
+tmp.html
+__pycache__/
+.idea/
+
