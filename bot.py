@@ -23,14 +23,14 @@ async def run_checker():
         pinged_roles = f.read()
         f.close()
         f = open("channel.txt", "r")
-        Channel = f.read()
+        channel = f.read()
         f.close()
-        if Channel != '' and pinged_roles != '':
+        if channel != '' and pinged_roles != '':
             games = check()
             for game in games:
                 msg = "Hello {pinged}, checkout this free game:\n".format(pinged = pinged_roles[:-1])
                 msg+= game.link
-                await bot.send_message(bot.get_channel(Channel), msg, embed = game.picture)
+                await bot.send_message(bot.get_channel(channel), msg, embed = game.picture)
         await asyncio.sleep(10)
 
 
@@ -46,15 +46,15 @@ async def on_message(message):
     if (message.author != bot.user) and message.content:
         if message.content[0] == '!':
             if message.content[1:].lower() in sources.channel:
-                out = "List of channels :\n"
+                msg = "List of channels :\n"
                 for c in message.author.server.channels:
-                    out += "`{c}` with id ```{id}``` \n".format(c = c, id = c.id)
-                await bot.send_message(message.channel, out)
+                    msg += "`{c}` with id ```{id}``` \n".format(c = c, id = c.id)
+                await bot.send_message(message.channel, msg)
             elif message.content[1:].lower() in sources.role_list:
-                out = "List of roles :\n"
+                msg = "List of roles :\n"
                 for r in message.author.server.roles:
-                    out += "`{role}` with id ```{id}``` \n".format(role = r, id = r.id)
-                await bot.send_message(message.channel, out)
+                    msg += "`{role}` with id ```{id}``` \n".format(role = r, id = r.id)
+                await bot.send_message(message.channel, msg)
             elif message.content[1:].split(" ")[0].lower() in sources.set_role:
                 role_id = message.content[1:].split(" ")[1]
                 f = open("ping_roles.txt", "a")
