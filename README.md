@@ -13,6 +13,11 @@ Adding free games to the database, a game must be displayed only one time.
 * ##### Set a modular check time 
 Modular time in the database.
 * ##### Rebuild all commands
-Create a modular library to store commands and simplify `bot.py`.
+Create a modular library to store commands and simplify `bot.py`.\
+Using [3862310 stackoverflow question](3862310).
 * ##### Create an help file and command
 Create a script that explain all commands here.
+
+
+
+[3862310]: https://stackoverflow.com/questions/3862310/how-to-find-all-the-subclasses-of-a-class-given-its-name
