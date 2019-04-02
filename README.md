@@ -12,10 +12,10 @@ Put `channel.txt` and `ping_roles.txt` in this database.
 Adding free games to the database, a game must be displayed only one time.
 * ##### Set a modular check time 
 Modular time in the database.
-* ##### Rebuild all commands
+* ##### Rebuild all commands : WIP
 Create a modular library to store commands and simplify `bot.py`.\
 Using [3862310 stackoverflow question](3862310).
-* ##### Create an help file and command
+* ##### Create an help file and command : WIP
 Create a script that explain all commands here.
 
 
