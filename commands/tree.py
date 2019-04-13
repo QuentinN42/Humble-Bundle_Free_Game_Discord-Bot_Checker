@@ -5,10 +5,11 @@ The tree where commands can be attach
 @author: Quentin Lieumont
 """
 from commands.cmd import Command, Context
+from typing import Type
 
 
 class Tree:
-    def __init__(self, default: Command, branches: dict):
+    def __init__(self, default: Type[Command], branches: dict):
         """
         A tree with branches, when ran, check if you can go down, else run the default command
 
@@ -57,7 +58,7 @@ class Tree:
          Not commutative operation
         ===========================
 
-        :param other: An other Tree
+        :param new_dict: An other Tree
         :return:
         """
         self.branches.update(new_dict)
@@ -81,7 +82,7 @@ class Tree:
 
 
 class Leaf(Tree):
-    def __init__(self, default: Command):
+    def __init__(self, default: Type[Command]):
         """
         Last level command container
         """
@@ -98,7 +99,7 @@ class Leaf(Tree):
          Not commutative operation
         ===========================
 
-        :param other: An other Tree
+        :param new_dict: An other Tree
         :return:
         """
         return Tree(self.default, new_dict)
@@ -106,8 +107,8 @@ class Leaf(Tree):
     # The run command
 
     def run(self, args: list, context: Context):
-        if args is []:
+        context.remains = args
+        if self.default.permeated(context):
             return self.default.run(context)
         else:
-            context.remains = args
-            return self.default.run(context)
+            return self.default.test_perm(context)

@@ -18,64 +18,59 @@ class Command:
     """
     The main command class
     """
-    act = []
-    need_run_alone = False
-    can_run_alone = False
-
-    def __init__(self):
-        raise SyntaxError("{C} as no instance methods.".format(C=self.__name__))
+    @classmethod
+    def run(cls, context: Context):
+        raise NotImplementedError()
 
     @classmethod
-    def run(cls, args=None):
-        """
-        Recursive check if a command exist.
-        If yes: run the run method of the subclass
-        If no : run the default method of the class
-
-        :param args: all the arguments in a list ex : ['logs', 'read', 'all']
-        :return: the return of the called command
-        """
-        if cls.need_run_alone:
-            return cls.default(args)
-        if args is None and not cls.can_run_alone:
-            raise AttributeError("{C} can't be run with no arguments.".format(C=cls.__name__))
-        if args is None and cls.can_run_alone:
-            return cls.default()
-
-        sub: Command
-        for sub in cls.__subclasses__():
-            if args[0] in sub.act:
-                return sub.run(args[1:])
-        return cls.default(args)
+    def test_perm(cls, context: Context) -> str:
+        raise NotImplementedError()
 
     @classmethod
-    def default(cls, args=None):
-        return get_help(args)
+    def permeated(cls, context: Context) -> bool:
+        if cls.test_perm(context) is "":
+            return True
+        else:
+            return False
+
+
+class Help(Command):
+    @classmethod
+    def run(cls, context: Context):
+        return get_help(context)
 
 
 class Ping(Command):
     """
     The basic ping command
     """
-    act = ['ping']
-    need_run_alone = True
-    can_run_alone = True
-
     @classmethod
-    def default(cls, args=None):
+    def run(cls, context: Context):
         return "pong"
 
 
-def test_cmd(cmd):
+class Bla(Command):
     """
-    Run all the command.
-    :param cmd: an one line command
-    :return: the result
+    The basic ping command
     """
-    if cmd is "":
-        raise AttributeError("You need to enter a command")
-    return Command.run(cmd.split(" "))
+    @classmethod
+    def run(cls, context: Context):
+        return "bla"
 
 
-if __name__ == '__main__':
-    print("Done")
+class Bli(Command):
+    """
+    The basic ping command
+    """
+    @classmethod
+    def run(cls, context: Context):
+        return "bli"
+
+
+class Blo(Command):
+    """
+    The basic ping command
+    """
+    @classmethod
+    def run(cls, context: Context):
+        return "blo"
