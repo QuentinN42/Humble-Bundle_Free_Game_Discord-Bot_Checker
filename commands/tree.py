@@ -4,7 +4,7 @@ The tree where commands can be attach
 @date: 13/04/2019
 @author: Quentin Lieumont
 """
-from commands.cmd import Command
+from commands.cmd import Command, Context
 
 
 class Tree:
@@ -67,6 +67,18 @@ class Tree:
         self.branches.pop(key_to_remove)
         return self
 
+    # The run command
+
+    def run(self, args: list, context: Context):
+        if args is []:
+            return self.default.run(context)
+        elif args[0] in self.branches.keys():
+            context.path.append(args[0])
+            return self.branches[args[0]].run(args[1:], context)
+        else:
+            context.remains = args
+            return self.default.run(context)
+
 
 class Leaf(Tree):
     def __init__(self, default: Command):
@@ -90,3 +102,12 @@ class Leaf(Tree):
         :return:
         """
         return Tree(self.default, new_dict)
+
+    # The run command
+
+    def run(self, args: list, context: Context):
+        if args is []:
+            return self.default.run(context)
+        else:
+            context.remains = args
+            return self.default.run(context)
