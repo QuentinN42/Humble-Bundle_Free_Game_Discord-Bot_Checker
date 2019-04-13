@@ -5,6 +5,18 @@ Usefull thinks...
 @author: Quentin Lieumont
 """
 import discord
+import json
+
+
+def get_json(link: str):
+    return json.load(open(link, 'r'))
+
+
+def write_json(link: str, data) -> None:
+    _json = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+    with open(link, 'w') as f:
+        for l in _json.split('\n'):
+            f.write(l)
 
 
 # all commands
