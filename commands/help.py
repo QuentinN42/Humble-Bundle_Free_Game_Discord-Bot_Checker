@@ -6,5 +6,5 @@ The help script
 """
 
 
-def get_help():
-    raise NotImplementedError("WIP")
+def get_help(cmd=None):
+    return "help with " + str(cmd)
