@@ -12,7 +12,7 @@
         "mr_M":{
             "inherit" : [
             ],
-            "this_role": [
+            "this_user": [
 
             ]
         }
