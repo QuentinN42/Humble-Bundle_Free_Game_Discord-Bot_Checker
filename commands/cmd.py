@@ -5,10 +5,11 @@ The file where all commands are builds
 @author: Quentin Lieumont
 """
 from sources import get_json
+from discord.message import Message
 
 
 class Context:
-    def __init__(self, message):
+    def __init__(self, message: Message):
         self.msg = message
         self.path = []
         self.remains = []
@@ -27,33 +28,36 @@ class Command:
         return cls.__name__.lower()
 
     @classmethod
-    def _get_perms(cls) -> dict:
+    def _test(cls, mode: str, cmd: str, json: dict, role: str, first_cmd: str = "") -> bool:
         """
-        get witch role/user are allowed to use this command
-        :return: the dict of allowed role, allowed user
+        test if cmd is in role perms or in inherit perms
+        :param cmd:
+        :param role:
+        :return:
         """
-        json = get_json("commands/perms.json")
-        rl = []
-        ul = []
-
-        for role in json["role"]:
-            if role["this_role"] == cls.act():  # < --- missing inherit
-                rl.append(role)
-
-        for user in json["user"]:
-            if user["this_user"] == cls.act():  # < --- missing inherit
-                rl.append(user)
-
-        return {"role": rl, "user": ul}
+        if mode not in json.keys():
+            raise SyntaxError("Unrecognised mode")
+        if first_cmd == "":
+            first_cmd = cmd
+        if cmd in json[mode][role]["this_role"]:
+            return True
+        else:
+            for herit in json[mode][role]["inherit"]:
+                if herit == first_cmd:
+                    raise SyntaxError("Recursive definition in permissions")
+                elif cls._test(mode, cmd, json, herit, cmd):
+                    return True
+        return False
 
     @classmethod
-    def test_perm(cls, context: Context) -> str:
+    def test_perm(cls, context: Context) -> str:  # < --- role perms missing
         """
         return the permission error, "" if no error
         :param context: Context
         :return error: str
         """
-        raise NotImplementedError()
+        if cls._test("user", cls.act(), get_json("commands/perm.json"), context.msg.author.id):
+            return ""
 
     @classmethod
     def permeated(cls, context: Context) -> bool:
