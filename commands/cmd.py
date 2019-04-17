@@ -22,7 +22,16 @@ class Command:
         raise NotImplementedError()
 
     @classmethod
+    def act(cls):
+        return cls.__name__.lower()
+
+    @classmethod
     def test_perm(cls, context: Context) -> str:
+        """
+        return the permission error, "" if no error
+        :param context: Context
+        :return error: str
+        """
         raise NotImplementedError()
 
     @classmethod

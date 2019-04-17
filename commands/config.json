@@ -1,13 +1,13 @@
 {
-    "default": "Help",
-    "dico": {
-        "ping": "Ping",
-        "bla": {
-            "default": "Bla",
-            "dico": {
-                "bli" : "Bli",
-                "blo" : "Blo"
-            }
+    "default": "help",
+    "dico": [
+        "ping",
+        {
+            "default": "bla",
+            "dico": [
+                "bli",
+                "blo"
+            ]
         }
-    }
+    ]
 }

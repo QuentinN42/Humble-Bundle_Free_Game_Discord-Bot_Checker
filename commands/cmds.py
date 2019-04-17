@@ -9,6 +9,9 @@ from commands.cmd import Command, Context
 
 
 class Help(Command):
+    """
+    help me '_'
+    """
     @classmethod
     def run(cls, context: Context):
         return get_help(context)
@@ -33,7 +36,7 @@ class Ping(Command):
 
 class Bla(Command):
     """
-    The basic ping command
+    test command
     """
     @classmethod
     def run(cls, context: Context):
@@ -46,7 +49,7 @@ class Bla(Command):
 
 class Bli(Command):
     """
-    The basic ping command
+    test command
     """
     @classmethod
     def run(cls, context: Context):
@@ -59,7 +62,7 @@ class Bli(Command):
 
 class Blo(Command):
     """
-    The basic ping command
+    test command
     """
     @classmethod
     def run(cls, context: Context):

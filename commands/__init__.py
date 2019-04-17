@@ -7,17 +7,31 @@ New library to build commands
 from commands.tree import Tree, Leaf
 from commands.cmds import *
 from sources import get_json
+from typing import Type
+
+
+def get_cmd(txt: str) -> Type[Command]:
+    """
+    Get a command from a txt via the act() method
+    :param txt: text
+    :return: Command
+    """
+    for cmd in Command.__subclasses__():
+        if cmd.act() == txt:
+            return cmd
+    raise SyntaxError(txt + " not found")
 
 
 def build(data: dict) -> Tree:
-    d = eval(data["default"])
+    d = get_cmd(data["default"])
     dico = {}
-    for k, v in data["dico"].items():
-        if type(v) is dict:
-            v = build(v)
-            dico.update({k: v})
+    for e in data["dico"]:
+        if type(e) is dict:
+            v = build(e)
+            dico.update({v.default.act(): v})
         else:
-            dico.update({k: Leaf(eval(v))})
+            c = get_cmd(e)
+            dico.update({c.act(): Leaf(c)})
     return Tree(d, dico)
 
 
