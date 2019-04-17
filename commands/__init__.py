@@ -5,7 +5,7 @@ New library to build commands
 @author: Quentin Lieumont
 """
 from commands.tree import Tree, Leaf
-from commands.cmd import *
+from commands.cmds import *
 from sources import get_json
 
 

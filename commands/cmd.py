@@ -4,7 +4,6 @@ The file where all commands are builds
 @date: 01/04/2019
 @author: Quentin Lieumont
 """
-from commands.help import get_help
 
 
 class Context:
@@ -32,45 +31,3 @@ class Command:
             return True
         else:
             return False
-
-
-class Help(Command):
-    @classmethod
-    def run(cls, context: Context):
-        return get_help(context)
-
-
-class Ping(Command):
-    """
-    The basic ping command
-    """
-    @classmethod
-    def run(cls, context: Context):
-        return "pong"
-
-
-class Bla(Command):
-    """
-    The basic ping command
-    """
-    @classmethod
-    def run(cls, context: Context):
-        return "bla"
-
-
-class Bli(Command):
-    """
-    The basic ping command
-    """
-    @classmethod
-    def run(cls, context: Context):
-        return "bli"
-
-
-class Blo(Command):
-    """
-    The basic ping command
-    """
-    @classmethod
-    def run(cls, context: Context):
-        return "blo"
