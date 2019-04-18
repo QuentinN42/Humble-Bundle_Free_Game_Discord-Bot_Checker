@@ -39,14 +39,15 @@ class Command:
             raise SyntaxError("Unrecognised mode")
         if first_cmd == "":
             first_cmd = cmd
-        if cmd in json[mode][role]["this_role"]:
-            return True
-        else:
-            for herit in json[mode][role]["inherit"]:
-                if herit == first_cmd:
-                    raise SyntaxError("Recursive definition in permissions")
-                elif cls._test(mode, cmd, json, herit, cmd):
-                    return True
+        if role in json[mode].keys():
+            if cmd in json[mode][role]["perm"]:
+                return True
+            else:
+                for herit in json[mode][role]["inherit"]:
+                    if herit == first_cmd:
+                        raise SyntaxError("Recursive definition in permissions")
+                    elif cls._test(mode, cmd, json, herit, cmd):
+                        return True
         return False
 
     @classmethod
@@ -58,9 +59,9 @@ class Command:
         """
         user = context.msg.author
         json = get_json("commands/perm.json")
-        if cls._test("user", cls.act(), json, user.id):
+        if cls._test("user", cls.act(), json, str(user.id).zfill(4)):
             return ""
-        elif True in [cls._test("user", cls.act(), json, r.id) for r in user.roles]:
+        elif True in [cls._test("role", cls.act(), json, str(r.id).zfill(4)) for r in user.roles]:
             return ""
         else:
             return "You can't run this command :/"

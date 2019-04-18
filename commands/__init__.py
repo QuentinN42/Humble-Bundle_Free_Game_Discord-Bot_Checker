@@ -36,3 +36,33 @@ def build(data: dict) -> Tree:
 
 
 main = build(get_json('commands/config.json'))
+
+if __name__ == '__main__':
+    class Message:
+        def __init__(self, u):
+            self.author = u
+
+
+    class R:
+        def __init__(self, id: int):
+            self.id = id
+
+
+    class U:
+        def __init__(self, id: int, roles: list = []):
+            self.id = id
+            self.roles = roles
+
+
+    r1 = R(1)
+    r2 = R(2)
+
+    u1 = U(1, [r1])
+    u2 = U(2, [r2])
+    u101 = U(101)
+    u102 = U(102)
+
+    c1 = Context(Message(u1))
+    c2 = Context(Message(u2))
+    c101 = Context(Message(u101))
+    c102 = Context(Message(u102))

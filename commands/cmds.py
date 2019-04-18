@@ -16,10 +16,6 @@ class Help(Command):
     def run(cls, context: Context):
         return get_help(context)
 
-    @classmethod
-    def test_perm(cls, context: Context) -> str:
-        return ""
-
 
 class Ping(Command):
     """
@@ -28,10 +24,6 @@ class Ping(Command):
     @classmethod
     def run(cls, context: Context):
         return "pong"
-
-    @classmethod
-    def test_perm(cls, context: Context) -> str:
-        return ""
 
 
 class Bla(Command):
@@ -42,10 +34,6 @@ class Bla(Command):
     def run(cls, context: Context):
         return "bla"
 
-    @classmethod
-    def test_perm(cls, context: Context) -> str:
-        return ""
-
 
 class Bli(Command):
     """
@@ -55,10 +43,6 @@ class Bli(Command):
     def run(cls, context: Context):
         return "bli"
 
-    @classmethod
-    def test_perm(cls, context: Context) -> str:
-        return "Not permitted"
-
 
 class Blo(Command):
     """
@@ -67,7 +51,3 @@ class Blo(Command):
     @classmethod
     def run(cls, context: Context):
         return "blo"
-
-    @classmethod
-    def test_perm(cls, context: Context) -> str:
-        return ""

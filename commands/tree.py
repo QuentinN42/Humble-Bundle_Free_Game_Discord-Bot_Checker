@@ -71,7 +71,7 @@ class Tree:
     # The run command
 
     def run(self, args: list, context: Context):
-        if args is []:
+        if len(args) is 0:
             return self.default.run(context)
         elif args[0] in self.branches.keys():
             context.path.append(args[0])

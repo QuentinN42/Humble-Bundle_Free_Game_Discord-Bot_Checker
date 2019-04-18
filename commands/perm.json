@@ -1,19 +1,35 @@
 {
     "role": {
         "0001": {
-            "inherit" : [
+            "inherit"  : [
             ],
-            "this_role": [
-
+            "perm": [
+                "bla"
+            ]
+        },
+        "0002": {
+            "inherit" : [
+                "0001"
+            ],
+            "perm": [
+                "bli"
             ]
         }
     },
     "user":{
-        "mr_M":{
+        "0101":{
             "inherit" : [
             ],
-            "this_user": [
-
+            "perm": [
+                "blo"
+            ]
+        },
+        "0102":{
+            "inherit" : [
+                "0101"
+            ],
+            "perm": [
+                "bli"
             ]
         }
     }
