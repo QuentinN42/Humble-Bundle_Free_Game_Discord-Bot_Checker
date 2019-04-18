@@ -50,14 +50,20 @@ class Command:
         return False
 
     @classmethod
-    def test_perm(cls, context: Context) -> str:  # < --- role perms missing
+    def test_perm(cls, context: Context) -> str:
         """
         return the permission error, "" if no error
         :param context: Context
         :return error: str
         """
-        if cls._test("user", cls.act(), get_json("commands/perm.json"), context.msg.author.id):
+        user = context.msg.author
+        json = get_json("commands/perm.json")
+        if cls._test("user", cls.act(), json, user.id):
             return ""
+        elif True in [cls._test("user", cls.act(), json, r.id) for r in user.roles]:
+            return ""
+        else:
+            return "You can't run this command :/"
 
     @classmethod
     def permeated(cls, context: Context) -> bool:
