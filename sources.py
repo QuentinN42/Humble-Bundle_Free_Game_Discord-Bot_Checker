@@ -32,17 +32,17 @@ outputfile = "tmp.html"
 
 
 error_pict_url = "https://pbs.twimg.com/profile_images/607860484830859264/AQuZ4ODc.png"
-error_pict = discord.Embed().set_image(url = error_pict_url)
+error_pict = discord.Embed().set_image(url=error_pict_url)
 
 
 class Game:
-    def __init__(self, name, discount, price, link, picture_url = None):
+    def __init__(self, name, discount, price, link, picture_url=None):
         self.name = name
         self.discount = discount
         self.price = price
         self.link = link
         self.picture_url = "".join(picture_url.split("amp;"))
-        self.picture = discord.Embed().set_image(url = self.picture_url)
+        self.picture = discord.Embed().set_image(url=self.picture_url)
     
     def __eq__(self, other):
         if type(other) == type(self):

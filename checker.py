@@ -60,9 +60,9 @@ def get_all_games():
     for raw_game in get_all_games_raw()[:-1]:
         link = "https://www.humblebundle.com" + raw_game.split("href=\"")[1].split("\"")[0]
         picture = raw_game.split("<img ")[1].split("src=\"")[1].split("\"")[0]
-        name = raw_game.split("<span class=\"entity-title \">")[1].split("</span>")[0]
+        name = raw_game.split("<span class=\"entity-title\">")[1].split("</span>")[0]
         price = raw_game.split("<span class=\"price\">")[1].split("</span>")[0]
-        discount = raw_game.split("<span class=\"discount-percentage\">")[1].split("</span>")[0]
+        discount = raw_game.split("<span class=\"store-discount\">")[1].split("</span>")[0]
         games.append(Game(name, discount, price, link, picture))
     return games
 
