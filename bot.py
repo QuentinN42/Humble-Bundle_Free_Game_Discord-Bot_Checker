@@ -16,7 +16,7 @@ from checker import main as check
 bot = Bot(command_prefix="!")
 
 
-@tasks.loop
+@tasks.loop(seconds=10)
 async def run_checker():
     print("loop launched")
     with open("ping_roles.txt", "r") as f:
@@ -37,9 +37,11 @@ async def run_checker():
                 msg = f"Hello {pinged_roles[:-1]}, checkout this free game:\n"
                 msg += game.link
                 print(f" | ch: {channel}")
-                print(f" | msg:{msg}")
-                await bot.get_channel(channel).send(msg, embed=game.picture)
-    sources.write_json("presented_games.json", presented_games)
+                print(f" | msg:\n{msg}\n")
+                sources.write_json("presented_games.json", presented_games)
+                await bot.get_channel(int(channel)).send(msg, embed=game.picture)
+            else:
+                print("    Nope")
 
 
 @bot.event
@@ -57,12 +59,12 @@ async def on_message(message):
             if message.content[1:].lower() in sources.channel:
                 msg = "List of channels :\n"
                 for c in message.author.server.channels:
-                    msg += "`{c}` with id ```{id}``` \n".format(c = c, id = c.id)
+                    msg += "`{c}` with id ```{id}``` \n".format(c=c, id=c.id)
                 await message.channel.send(msg)
             elif message.content[1:].lower() in sources.role_list:
                 msg = "List of roles :\n"
                 for r in message.author.server.roles:
-                    msg += "`{role}` with id ```{id}``` \n".format(role = r, id = r.id)
+                    msg += "`{role}` with id ```{id}``` \n".format(role=r, id=r.id)
                 await message.channel.send(msg)
             elif message.content[1:].split(" ")[0].lower() in sources.set_role:
                 role_id = message.content[1:].split(" ")[1]
@@ -93,7 +95,7 @@ async def on_message(message):
                 print("-- channel set to {}--".format(message.channel.id))
                 await message.channel.send("Channel set :)")
             else:
-                await message.channel.send("Erreur ...", embed = sources.error_pict)
+                await message.channel.send("Erreur ...", embed=sources.error_pict)
 
 
 bot.run(secrets.BOT_TOKEN)
