@@ -15,7 +15,7 @@ def get_data():
         True -> Success
         False-> Fail
     """
-    test = os.system("phantomjs getPage.JS {} > {}".format(url, outputfile))
+    test = os.system(f"phantomjs getPage.JS {url} > {outputfile}")
     if test == 0:
         return True
     else:
@@ -47,9 +47,9 @@ def get_all_games_raw():
     :return list(str): all <li>...</li> in the UL
     """
     body = get_body()
-    ul_end = "</ul>\n</div></div>\n\n  <div class=\"js-loading-overlay overlay"
-    ul = body.split("<ul class=\"entities-list")[1].split(ul_end)[0]
-    return ul.split("<li class=\"entity-block-container")[1:]
+    ul_end = '</ul>\n</div></div>\n\n  <div class="js-loading-overlay overlay'
+    ul = body.split('<ul class="entities-list')[1].split(ul_end)[0]
+    return ul.split('<li class="entity-block-container')[1:]
 
 
 def get_all_games():
@@ -58,11 +58,15 @@ def get_all_games():
     """
     games = []
     for raw_game in get_all_games_raw()[:-1]:
-        link = "https://www.humblebundle.com" + raw_game.split("href=\"")[1].split("\"")[0]
-        picture = raw_game.split("<img ")[1].split("src=\"")[1].split("\"")[0]
-        name = raw_game.split("<span class=\"entity-title\">")[1].split("</span>")[0]
-        price = raw_game.split("<span class=\"price\">")[1].split("</span>")[0]
-        discount = raw_game.split("<span class=\"store-discount\">")[1].split("</span>")[0]
+        link = (
+            "https://www.humblebundle.com" + raw_game.split('href="')[1].split('"')[0]
+        )
+        picture = raw_game.split("<img ")[1].split('src="')[1].split('"')[0]
+        name = raw_game.split('<span class="entity-title">')[1].split("</span>")[0]
+        price = raw_game.split('<span class="price">')[1].split("</span>")[0]
+        discount = raw_game.split('<span class="store-discount">')[1].split("</span>")[
+            0
+        ]
         games.append(Game(name, discount, price, link, picture))
     return games
 
@@ -77,22 +81,33 @@ def get_free_games(game_list: list):
     return [game for game in game_list if game.discount == "-100%"]
 
 
-def main():
+def main(verbose: bool = False):
     """
     The main function
     
     :return:
     """
+    if verbose:
+        print("\tgetting web page")
     test = get_data()
-    if not test:
-        return False
-    else:
+    if test:
+        if verbose:
+            print(f"\tweb page successfully pulled")
         all_games = get_all_games()
+        if verbose:
+            print(f"\t{len(all_games)} game(s)")
         free_games = get_free_games(all_games)
+        if verbose:
+            print(f"\t{len(free_games)} free game(s)")
         return free_games
+    else:
+        if verbose:
+            print(f"\tcan't pull the page :/")
+        return False
 
 
 if __name__ == "__main__":
-    gs = main()
-    for g in gs:
-        print(g)
+    pass
+    # gs = main(True)
+    # for g in gs:
+    #   print(g)

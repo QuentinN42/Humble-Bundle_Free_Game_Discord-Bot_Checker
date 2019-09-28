@@ -9,13 +9,13 @@ import json
 
 
 def get_json(link: str):
-    return json.load(open(link, 'r'))
+    return json.load(open(link, "r"))
 
 
 def write_json(link: str, data) -> None:
-    _json = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-    with open(link, 'w') as f:
-        for l in _json.split('\n'):
+    _json = json.dumps(data, sort_keys=True, indent=4, separators=(",", ": "))
+    with open(link, "w") as f:
+        for l in _json.split("\n"):
             f.write(l)
 
 
@@ -43,13 +43,13 @@ class Game:
         self.link = link
         self.picture_url = "".join(picture_url.split("amp;"))
         self.picture = discord.Embed().set_image(url=self.picture_url)
-    
+
     def __eq__(self, other):
         if type(other) == type(self):
             return self.name == other.name
         else:
             return False
-    
+
     def __ne__(self, other):
         return not self == other
 

@@ -26,9 +26,9 @@ async def run_checker():
     presented_games: list = sources.get_json("presented_games.json")
     print(presented_games)
     print(channel, pinged_roles)
-    if channel != '' and pinged_roles != '':
+    if channel != "" and pinged_roles != "":
         print("checker launched")
-        games = check()
+        games = check(True)
         print("games parsed")
         for game in games:
             print(f"-> {game.name}")
@@ -55,7 +55,7 @@ async def on_message(message):
     print("Message from " + str(message.author) + ":")
     print(message.content)
     if (message.author != bot.user) and message.content:
-        if message.content[0] == '!':
+        if message.content[0] == "!":
             if message.content[1:].lower() in sources.channel:
                 msg = "List of channels :\n"
                 for c in message.author.server.channels:
@@ -69,7 +69,7 @@ async def on_message(message):
             elif message.content[1:].split(" ")[0].lower() in sources.set_role:
                 role_id = message.content[1:].split(" ")[1]
                 f = open("ping_roles.txt", "a")
-                f.write(str(role_id)+",")
+                f.write(str(role_id) + ",")
                 f.close()
                 msg = "{} added to the `ping_role` list.".format(role_id)
                 await message.channel.send(msg)
@@ -81,7 +81,7 @@ async def on_message(message):
                 if role_id in roles:
                     roles.remove(role_id)
                     f = open("ping_roles.txt", "w")
-                    f.write(",".join(roles)+",")
+                    f.write(",".join(roles) + ",")
                     f.close()
                     msg = "{} remved from the `ping_role` list.".format(role_id)
                 else:
